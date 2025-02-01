@@ -1,18 +1,18 @@
 node {
-    def myDockerImage = docker.image('node:16-buster-slim')
+    def pythonImage = docker.image('python:3.9-slim')
 
     // Pull Docker image jika belum ada
-    myDockerImage.pull()
+    pythonImage.pull()
 
     stage('Build') {
-        myDockerImage.inside('-p 3000:3000') {
-            sh 'npm install'
+        pythonImage.inside('-v $WORKSPACE:/app -w /app') {
+            sh 'pip install -r requirements.txt'
         }
     }
 
     stage('Test') {
-        myDockerImage.inside('-p 3000:3000') {
-            sh './jenkins/scripts/test.sh'
+        pythonImage.inside('-v $WORKSPACE:/app -w /app') {
+            sh 'pytest tests/'
         }
     }
 }
