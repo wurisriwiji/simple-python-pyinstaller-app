@@ -35,7 +35,7 @@ pipeline {
         stage('Deploy') {
             agent any
             steps {
-                sh 'python sources/add2vals.py &'
+                sh 'python3 sources/add2vals.py &'
             }
         }
         stage('Wait for 1 minute') {
