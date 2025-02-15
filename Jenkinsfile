@@ -26,6 +26,18 @@ pipeline {
                 }
             }
         }
+        stage('Manual Approval') {
+            input message: 'Lanjutkan ke tahap Deploy?'
+        }
+        stage('Deploy') {
+            agent any
+            steps {
+                sh 'python sources/add2vals.py &'
+            }
+        }
+        stage('Wait for 1 minute') {
+            sh 'sleep 60'
+        }
     }
 }
 
