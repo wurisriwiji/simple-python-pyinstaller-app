@@ -36,15 +36,20 @@ pipeline {
             agent any
             steps {
                 sh 'docker build -t my-python-app .'
-                sh 'docker run -d --name my-python-app-container my-python-app'
-                sh 'docker exec -it my-python-app-container /bin/bash'
-                sh 'docker python add2vals.py'
+                sh 'docker run -d -p 8080:8080 --name my-python-app-container my-python-app'
+            }
+        }
+        stage('Test Application') {
+            agent any
+            steps {
+                sh 'docker exec my-python-app-container python sources/add2vals.py'
             }
         }
         stage('Wait for 1 minute') {
             agent any
             steps {
                 sh 'sleep 60' // Jeda eksekusi selama 1 menit
+                sh 'docker stop my-python-app-container && docker rm my-python-app-container'
             }
         }
     }
