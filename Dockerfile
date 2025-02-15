@@ -8,4 +8,5 @@ WORKDIR /app
 COPY sources/ /app/
 
 # Tentukan perintah default untuk menjalankan aplikasi
-CMD ["python", "add2vals.py"]
+CMD ["sh", "-c", "python add2vals.py && tail -f /dev/null"]
+
