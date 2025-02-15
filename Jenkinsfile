@@ -33,18 +33,10 @@ pipeline {
             
         }
         stage('Deploy') {
-            agent {
-                docker {
-                    image 'cdrx/pyinstaller-linux:python2'
-                }
-            }
+            agent any
             steps {
-                sh 'pyinstaller --onefile sources/add2vals.py'
-            }
-            post {
-                success {
-                    archiveArtifacts 'dist/add2vals'
-                }
+                sh 'docker build -t my-python-app .'
+                sh 'docker run -d --name my-python-app-container my-python-app'
             }
         }
         stage('Wait for 1 minute') {
