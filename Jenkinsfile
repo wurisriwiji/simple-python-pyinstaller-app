@@ -37,6 +37,8 @@ pipeline {
             steps {
                 sh 'docker build -t my-python-app .'
                 sh 'docker run -d --name my-python-app-container my-python-app'
+                sh 'docker exec -it my-python-app-container /bin/bash'
+                sh 'docker python add2vals.py'
             }
         }
         stage('Wait for 1 minute') {
