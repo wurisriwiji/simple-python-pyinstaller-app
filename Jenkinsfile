@@ -39,8 +39,9 @@ pipeline {
             }
         }
         stage('Wait for 1 minute') {
+            agent any
             steps {
-                sh 'sleep 60'
+                sh 'sleep 60' // Jeda eksekusi selama 1 menit
             }
         }
     }
