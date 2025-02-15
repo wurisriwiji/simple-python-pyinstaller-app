@@ -27,7 +27,10 @@ pipeline {
             }
         }
         stage('Manual Approval') {
-            input message: 'Lanjutkan ke tahap Deploy?'
+            steps {
+                input message: 'Lanjutkan ke tahap Deploy?'
+            }
+            
         }
         stage('Deploy') {
             agent any
@@ -36,7 +39,9 @@ pipeline {
             }
         }
         stage('Wait for 1 minute') {
-            sh 'sleep 60'
+            steps {
+                sh 'sleep 60'
+            }
         }
     }
 }
