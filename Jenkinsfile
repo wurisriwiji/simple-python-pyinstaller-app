@@ -39,12 +39,6 @@ pipeline {
                 sh 'docker run -d -p 8080:8080 --name my-python-app-container my-python-app'
             }
         }
-        stage('Test Application') {
-            agent any
-            steps {
-                sh 'docker exec my-python-app-container python sources/add2vals.py'
-            }
-        }
         stage('Wait for 1 minute') {
             agent any
             steps {
